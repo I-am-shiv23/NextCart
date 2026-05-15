@@ -1,0 +1,23 @@
+{
+  "name": "nexcart---ecom-mern",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "shivam",
+    "microservice"
+  ],
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "install": "cd backend && npm install && cd ../frontend && npm install",
+    "dev:server": "npm --prefix backend run dev",
+    "dev:client": "npm --prefix frontend start",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "build": "npm --prefix frontend run build"
+  },
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
