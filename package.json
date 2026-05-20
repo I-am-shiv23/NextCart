@@ -15,6 +15,7 @@
     "dev:server": "npm --prefix backend run dev",
     "dev:client": "npm --prefix frontend start",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "seed:products": "npm --prefix backend run seed:products",
     "build": "npm --prefix frontend run build"
   },
   "dependencies": {
