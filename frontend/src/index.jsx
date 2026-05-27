@@ -5,13 +5,16 @@ import App from './App';
 import { AuthProvider } from './context/AuthContext';
 import { store } from './redux/store';
 import './styles/global.css';
+import { SearchProvider } from './context/SearchContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <AuthProvider>
-      <App />
+      <SearchProvider>
+         <App />
+      </SearchProvider>
     </AuthProvider>
   </Provider>
 );

@@ -86,70 +86,78 @@ const AdminProducts = () => {
 
   if (!user || !isAdmin) {
     return (
-      <main className="w-full max-w-[1240px] mx-auto pt-[30px] px-4 pb-[54px] sm:pt-[42px] sm:px-5 sm:pb-[70px]">
-        <section className="grid justify-items-center gap-4 min-h-[320px] p-[40px_24px] text-center border border-white/5 rounded-xl bg-zinc-900 shadow-[0_18px_45px_rgba(0,0,0,0.24)]">
-          <span className="inline-flex text-orange-500 text-[0.78rem] font-bold tracking-[0.08em] mb-3 uppercase">Admin Products</span>
-          <h1 className="text-white text-[clamp(2.2rem,5vw,4rem)] leading-[1.05] mb-[14px]">{user ? "Admin only" : "Login required"}</h1>
-          <p className="text-zinc-300 leading-[1.7]">Only admin users can manage products.</p>
-          <Link to={user ? "/shop" : "/login"} className="btn">
-            {user ? "Back to Shop" : "Login"}
-          </Link>
+      <main className="main-content">
+        <section className="grid min-h-80 place-items-center bg-white p-8 text-center shadow-sm">
+          <div>
+            <h1 className="text-2xl font-semibold">{user ? "Admin only" : "Login required"}</h1>
+            <p className="mt-2 text-gray-600">Only admin users can manage products.</p>
+            <Link to={user ? "/shop" : "/login"} className="btn mt-5">
+              {user ? "Back to Shop" : "Login"}
+            </Link>
+          </div>
         </section>
       </main>
     );
   }
 
   return (
-    <main className="w-full max-w-[1240px] mx-auto pt-[30px] px-4 pb-[54px] sm:pt-[42px] sm:px-5 sm:pb-[70px]">
-      <header className="grid sm:flex sm:justify-between gap-6 sm:items-end mb-[30px] pb-[28px] border-b border-white/5">
-        <div>
-          <span className="inline-flex text-orange-500 text-[0.78rem] font-bold tracking-[0.08em] mb-3 uppercase">Inventory</span>
-          <h1 className="text-white text-[clamp(2.2rem,5vw,4rem)] leading-[1.05] mb-[14px]">Admin Products</h1>
-          <p className="max-w-[720px] text-zinc-300 leading-[1.7]">Review, edit, and remove products listed in the NexCart store.</p>
-        </div>
-        <div className="flex flex-wrap gap-3 items-center sm:justify-end">
-          <Link to="/admin/add-product" className="btn">
-            Add Product
-          </Link>
-          <Link to="/admin" className="inline-flex items-center justify-center min-h-[42px] p-[10px_14px] rounded-lg font-bold cursor-pointer border border-orange-500/45 bg-transparent text-orange-500 hover:text-white hover:bg-orange-500/15">
-            Dashboard
-          </Link>
+    <main className="main-content">
+      <header className="bg-white p-5 shadow-sm">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase text-[#2874f0]">Inventory</p>
+            <h1 className="mt-2 text-3xl font-semibold">Admin Products</h1>
+            <p className="mt-2 text-sm text-gray-600">Review, edit and remove listed products.</p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/admin/add-product" className="btn">
+              Add Product
+            </Link>
+            <Link to="/admin" className="rounded border border-[#2874f0] px-5 py-3 text-sm font-semibold text-[#2874f0]">
+              Dashboard
+            </Link>
+          </div>
         </div>
       </header>
 
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-[28px]" aria-label="Product stats">
-        <article className="min-h-[130px] p-[22px] border border-white/5 rounded-xl bg-zinc-900 shadow-[0_12px_32px_rgba(0,0,0,0.22)]">
-          <span className="text-zinc-400">Total Products</span>
-          <strong className="block text-white text-[1.9rem] mt-3">{stats.total}</strong>
+      <section className="mt-4 grid gap-4 sm:grid-cols-3">
+        <article className="bg-white p-5 shadow-sm">
+          <span className="text-sm text-gray-500">Total Products</span>
+          <strong className="mt-2 block text-2xl">{stats.total}</strong>
         </article>
-        <article className="min-h-[130px] p-[22px] border border-white/5 rounded-xl bg-zinc-900 shadow-[0_12px_32px_rgba(0,0,0,0.22)]">
-          <span className="text-zinc-400">In Stock</span>
-          <strong className="block text-white text-[1.9rem] mt-3">{stats.inStock}</strong>
+        <article className="bg-white p-5 shadow-sm">
+          <span className="text-sm text-gray-500">In Stock</span>
+          <strong className="mt-2 block text-2xl">{stats.inStock}</strong>
         </article>
-        <article className="min-h-[130px] p-[22px] border border-white/5 rounded-xl bg-zinc-900 shadow-[0_12px_32px_rgba(0,0,0,0.22)]">
-          <span className="text-zinc-400">Out of Stock</span>
-          <strong className="block text-white text-[1.9rem] mt-3">{stats.outOfStock}</strong>
-        </article>
-        <article className="min-h-[130px] p-[22px] border border-white/5 rounded-xl bg-zinc-900 shadow-[0_12px_32px_rgba(0,0,0,0.22)]">
-          <span className="text-zinc-400">Actions</span>
-          <strong className="block text-white text-[1.9rem] mt-3">Edit</strong>
+        <article className="bg-white p-5 shadow-sm">
+          <span className="text-sm text-gray-500">Out of Stock</span>
+          <strong className="mt-2 block text-2xl">{stats.outOfStock}</strong>
         </article>
       </section>
 
-      {loading && <div className="grid justify-items-center gap-4 min-h-[320px] p-[40px_24px] text-center border border-white/5 rounded-xl bg-zinc-900 shadow-[0_18px_45px_rgba(0,0,0,0.24)] text-zinc-300 leading-[1.7]">Loading products...</div>}
-      {!loading && error && <div className="grid justify-items-center gap-4 min-h-[320px] p-[40px_24px] text-center border border-red-500/35 rounded-xl bg-red-500/10 shadow-[0_18px_45px_rgba(0,0,0,0.24)] text-red-200 leading-[1.7]">{error}</div>}
+      {loading && (
+        <div className="mt-4 grid min-h-64 place-items-center bg-white shadow-sm text-gray-600">
+          Loading products...
+        </div>
+      )}
+
+      {!loading && error && (
+        <div className="mt-4 rounded border border-red-200 bg-red-50 p-4 text-red-700">
+          {error}
+        </div>
+      )}
 
       {!loading && !error && (
         <>
-          <div className="hidden sm:block overflow-hidden border border-white/5 rounded-xl bg-zinc-900 shadow-[0_18px_45px_rgba(0,0,0,0.24)]">
-            <table className="w-full border-collapse">
-              <thead>
+          <div className="mt-4 hidden overflow-hidden bg-white shadow-sm md:block">
+            <table className="w-full border-collapse text-sm">
+              <thead className="bg-[#f1f3f6] text-left text-gray-600">
                 <tr>
-                  <th className="text-zinc-400 text-[0.82rem] font-extrabold tracking-[0.06em] uppercase p-4 text-left align-middle border-b border-white/5">Product</th>
-                  <th className="text-zinc-400 text-[0.82rem] font-extrabold tracking-[0.06em] uppercase p-4 text-left align-middle border-b border-white/5">Category</th>
-                  <th className="text-zinc-400 text-[0.82rem] font-extrabold tracking-[0.06em] uppercase p-4 text-left align-middle border-b border-white/5">Price</th>
-                  <th className="text-zinc-400 text-[0.82rem] font-extrabold tracking-[0.06em] uppercase p-4 text-left align-middle border-b border-white/5">Stock</th>
-                  <th className="text-zinc-400 text-[0.82rem] font-extrabold tracking-[0.06em] uppercase p-4 text-left align-middle border-b border-white/5">Actions</th>
+                  <th className="p-4">Product</th>
+                  <th className="p-4">Category</th>
+                  <th className="p-4">Price</th>
+                  <th className="p-4">Stock</th>
+                  <th className="p-4">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -158,27 +166,27 @@ const AdminProducts = () => {
                     product.imageUrl?.trim() || product.imageUri?.trim() || "/img/NextCartpng.png";
 
                   return (
-                    <tr key={product._id}>
-                      <td className="text-zinc-300 p-4 text-left align-middle border-b border-white/5">
-                        <div className="flex gap-[14px] items-center">
-                          <img src={imageUrl} alt={product.name} className="w-[58px] h-[58px] rounded-lg object-cover bg-zinc-950" />
-                          <strong className="text-white font-bold">{product.name}</strong>
+                    <tr className="border-t" key={product._id}>
+                      <td className="p-4">
+                        <div className="flex items-center gap-3">
+                          <img src={imageUrl} alt={product.name} className="h-14 w-14 border object-contain" />
+                          <strong>{product.name}</strong>
                         </div>
                       </td>
-                      <td className="text-zinc-300 p-4 text-left align-middle border-b border-white/5">{product.category}</td>
-                      <td className="text-zinc-300 p-4 text-left align-middle border-b border-white/5">{formatCurrency(product.price)}</td>
-                      <td className="text-zinc-300 p-4 text-left align-middle border-b border-white/5">{product.stock}</td>
-                      <td className="text-zinc-300 p-4 text-left align-middle border-b border-white/5">
-                        <div className="flex flex-wrap gap-2.5">
+                      <td className="p-4">{product.category}</td>
+                      <td className="p-4">{formatCurrency(product.price)}</td>
+                      <td className="p-4">{product.stock}</td>
+                      <td className="p-4">
+                        <div className="flex flex-wrap gap-2">
                           <Link
                             to={`/admin/products/${product._id}/edit`}
-                            className="inline-flex items-center justify-center min-h-[42px] p-[10px_14px] rounded-lg font-bold cursor-pointer border border-orange-500/45 bg-transparent text-orange-500 hover:text-white hover:bg-orange-500/15 disabled:cursor-not-allowed disabled:opacity-60"
+                            className="rounded border border-[#2874f0] px-3 py-2 font-semibold text-[#2874f0]"
                           >
                             Edit
                           </Link>
                           <button
                             type="button"
-                            className="inline-flex items-center justify-center min-h-[42px] p-[10px_14px] rounded-lg font-bold cursor-pointer border border-red-500/35 bg-transparent text-red-300 hover:text-red-200 hover:border-red-500 hover:bg-red-500/10 disabled:cursor-not-allowed disabled:opacity-60"
+                            className="rounded border border-red-200 px-3 py-2 font-semibold text-red-600 disabled:text-gray-400"
                             onClick={() => handleDelete(product._id)}
                             disabled={deletingId === product._id}
                           >
@@ -193,31 +201,25 @@ const AdminProducts = () => {
             </table>
           </div>
 
-          <div className="grid gap-[14px] sm:hidden">
+          <div className="mt-4 grid gap-3 md:hidden">
             {products.map((product) => (
-              <article className="grid gap-[14px] p-[18px] border border-white/5 rounded-[10px] bg-zinc-900" key={product._id}>
-                <div className="flex justify-between gap-4 text-zinc-300">
-                  <span className="text-zinc-400">Name</span>
-                  <strong className="text-white font-bold">{product.name}</strong>
+              <article className="bg-white p-4 shadow-sm" key={product._id}>
+                <h2 className="font-semibold">{product.name}</h2>
+                <p className="mt-1 text-sm text-gray-500">{product.category}</p>
+                <div className="mt-3 flex justify-between text-sm">
+                  <span>{formatCurrency(product.price)}</span>
+                  <span>{product.stock} in stock</span>
                 </div>
-                <div className="flex justify-between gap-4 text-zinc-300">
-                  <span className="text-zinc-400">Price</span>
-                  <strong className="text-white font-bold">{formatCurrency(product.price)}</strong>
-                </div>
-                <div className="flex justify-between gap-4 text-zinc-300">
-                  <span className="text-zinc-400">Stock</span>
-                  <strong className="text-white font-bold">{product.stock}</strong>
-                </div>
-                <div className="flex flex-wrap gap-2.5">
+                <div className="mt-4 flex gap-2">
                   <Link
                     to={`/admin/products/${product._id}/edit`}
-                    className="inline-flex items-center justify-center min-h-[42px] p-[10px_14px] rounded-lg font-bold cursor-pointer border border-orange-500/45 bg-transparent text-orange-500 hover:text-white hover:bg-orange-500/15 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="rounded border border-[#2874f0] px-3 py-2 text-sm font-semibold text-[#2874f0]"
                   >
                     Edit
                   </Link>
                   <button
                     type="button"
-                    className="inline-flex items-center justify-center min-h-[42px] p-[10px_14px] rounded-lg font-bold cursor-pointer border border-red-500/35 bg-transparent text-red-300 hover:text-red-200 hover:border-red-500 hover:bg-red-500/10 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="rounded border border-red-200 px-3 py-2 text-sm font-semibold text-red-600"
                     onClick={() => handleDelete(product._id)}
                     disabled={deletingId === product._id}
                   >

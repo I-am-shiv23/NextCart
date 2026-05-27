@@ -1,29 +1,46 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#09090b] border-t border-white/5 px-5 py-10 mt-auto">
-      <div className="max-w-[1200px] mx-auto flex flex-wrap justify-between items-center gap-5">
-        
-        {/* Brand */}
+    <footer className="mt-auto bg-[#172337] text-white">
+      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-9 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <h3 className="text-orange-500 mb-2.5">NexCart</h3>
-          <p className="text-zinc-400 text-sm">Premium E-Commerce Platform.</p>
+          <h3 className="mb-3 text-sm font-semibold uppercase text-gray-400">About</h3>
+          <div className="grid gap-2 text-sm">
+            <Link to="/about" className="hover:underline">About NexCart</Link>
+            <Link to="/shop" className="hover:underline">Shop Products</Link>
+            <Link to="/disclaimer" className="hover:underline">Disclaimer</Link>
+          </div>
         </div>
 
-        {/* Links */}
-        <div className="flex gap-5">
-          <Link to="/about" className="text-zinc-400 text-sm hover:text-white transition-colors">About Us</Link>
-          <Link to="/return" className="text-zinc-400 text-sm hover:text-white transition-colors">Return Policy</Link>
-          <Link to="/disclaimer" className="text-zinc-400 text-sm hover:text-white transition-colors">Disclaimer</Link>
+        <div>
+          <h3 className="mb-3 text-sm font-semibold uppercase text-gray-400">Help</h3>
+          <div className="grid gap-2 text-sm">
+            <Link to="/return" className="hover:underline">Return Policy</Link>
+            <Link to="/cart" className="hover:underline">Cart</Link>
+            <Link to="/profile" className="hover:underline">My Account</Link>
+          </div>
         </div>
 
-        {/* Copyright */}
-        <div className="text-zinc-400 text-sm">
-          &copy; {new Date().getFullYear()} NexCart. All rights reserved.
+        <div>
+          <h3 className="mb-3 text-sm font-semibold uppercase text-gray-400">Policy</h3>
+          <div className="grid gap-2 text-sm">
+            <Link to="/return" className="hover:underline">Returns</Link>
+            <Link to="/disclaimer" className="hover:underline">Terms</Link>
+            <a href="mailto:support@nexcart.com" className="hover:underline">Support</a>
+          </div>
         </div>
 
+        <div>
+          <h3 className="mb-3 text-sm font-semibold uppercase text-gray-400">NexCart</h3>
+          <p className="text-sm leading-6 text-gray-200">
+            Simple online shopping for electronics, fashion, home, beauty and more.
+          </p>
+          <p className="mt-4 text-sm text-gray-300">
+            Copyright {new Date().getFullYear()} NexCart
+          </p>
+        </div>
       </div>
     </footer>
   );

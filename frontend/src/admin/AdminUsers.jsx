@@ -53,101 +53,107 @@ const AdminUsers = () => {
 
   if (!user || !isAdmin) {
     return (
-      <main className="w-full max-w-[1240px] mx-auto pt-[30px] px-4 pb-[54px] sm:pt-[42px] sm:px-5 sm:pb-[70px]">
-        <section className="grid justify-items-center gap-4 min-h-[320px] p-[40px_24px] text-center border border-white/5 rounded-xl bg-zinc-900 shadow-[0_18px_45px_rgba(0,0,0,0.24)]">
-          <span className="inline-flex text-orange-500 text-[0.78rem] font-bold tracking-[0.08em] mb-3 uppercase">Admin Users</span>
-          <h1 className="text-white text-[clamp(2.2rem,5vw,4rem)] leading-[1.05] mb-[14px]">{user ? "Admin only" : "Login required"}</h1>
-          <p className="text-zinc-300 leading-[1.7]">Only admin users can view customer accounts.</p>
-          <Link to={user ? "/shop" : "/login"} className="btn">
-            {user ? "Back to Shop" : "Login"}
-          </Link>
+      <main className="main-content">
+        <section className="grid min-h-80 place-items-center bg-white p-8 text-center shadow-sm">
+          <div>
+            <h1 className="text-2xl font-semibold">{user ? "Admin only" : "Login required"}</h1>
+            <p className="mt-2 text-gray-600">Only admin users can view customer accounts.</p>
+            <Link to={user ? "/shop" : "/login"} className="btn mt-5">
+              {user ? "Back to Shop" : "Login"}
+            </Link>
+          </div>
         </section>
       </main>
     );
   }
 
   return (
-    <main className="w-full max-w-[1240px] mx-auto pt-[30px] px-4 pb-[54px] sm:pt-[42px] sm:px-5 sm:pb-[70px]">
-      <header className="grid sm:flex sm:justify-between gap-6 sm:items-end mb-[30px] pb-[28px] border-b border-white/5">
-        <div>
-          <span className="inline-flex text-orange-500 text-[0.78rem] font-bold tracking-[0.08em] mb-3 uppercase">Customers</span>
-          <h1 className="text-white text-[clamp(2.2rem,5vw,4rem)] leading-[1.05] mb-[14px]">Admin Users</h1>
-          <p className="max-w-[720px] text-zinc-300 leading-[1.7]">View registered users and identify account roles.</p>
+    <main className="main-content">
+      <header className="bg-white p-5 shadow-sm">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase text-[#2874f0]">Customers</p>
+            <h1 className="mt-2 text-3xl font-semibold">Admin Users</h1>
+            <p className="mt-2 text-sm text-gray-600">View registered users and account roles.</p>
+          </div>
+          <Link to="/admin" className="rounded border border-[#2874f0] px-5 py-3 text-sm font-semibold text-[#2874f0]">
+            Dashboard
+          </Link>
         </div>
-        <Link to="/admin" className="inline-flex items-center justify-center min-h-[42px] p-[10px_14px] rounded-lg font-bold cursor-pointer border border-orange-500/45 bg-transparent text-orange-500 hover:text-white hover:bg-orange-500/15">
-          Dashboard
-        </Link>
       </header>
 
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-[28px]" aria-label="User stats">
-        <article className="min-h-[130px] p-[22px] border border-white/5 rounded-xl bg-zinc-900 shadow-[0_12px_32px_rgba(0,0,0,0.22)]">
-          <span className="text-zinc-400">Total Users</span>
-          <strong className="block text-white text-[1.9rem] mt-3">{stats.total}</strong>
+      <section className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <article className="bg-white p-5 shadow-sm">
+          <span className="text-sm text-gray-500">Total Users</span>
+          <strong className="mt-2 block text-2xl">{stats.total}</strong>
         </article>
-        <article className="min-h-[130px] p-[22px] border border-white/5 rounded-xl bg-zinc-900 shadow-[0_12px_32px_rgba(0,0,0,0.22)]">
-          <span className="text-zinc-400">Customers</span>
-          <strong className="block text-white text-[1.9rem] mt-3">{stats.customers}</strong>
+        <article className="bg-white p-5 shadow-sm">
+          <span className="text-sm text-gray-500">Customers</span>
+          <strong className="mt-2 block text-2xl">{stats.customers}</strong>
         </article>
-        <article className="min-h-[130px] p-[22px] border border-white/5 rounded-xl bg-zinc-900 shadow-[0_12px_32px_rgba(0,0,0,0.22)]">
-          <span className="text-zinc-400">Admins</span>
-          <strong className="block text-white text-[1.9rem] mt-3">{stats.admins}</strong>
+        <article className="bg-white p-5 shadow-sm">
+          <span className="text-sm text-gray-500">Admins</span>
+          <strong className="mt-2 block text-2xl">{stats.admins}</strong>
         </article>
-        <article className="min-h-[130px] p-[22px] border border-white/5 rounded-xl bg-zinc-900 shadow-[0_12px_32px_rgba(0,0,0,0.22)]">
-          <span className="text-zinc-400">Verified</span>
-          <strong className="block text-white text-[1.9rem] mt-3">{stats.verified}</strong>
+        <article className="bg-white p-5 shadow-sm">
+          <span className="text-sm text-gray-500">Verified</span>
+          <strong className="mt-2 block text-2xl">{stats.verified}</strong>
         </article>
       </section>
 
-      {loading && <div className="grid justify-items-center gap-4 min-h-[320px] p-[40px_24px] text-center border border-white/5 rounded-xl bg-zinc-900 shadow-[0_18px_45px_rgba(0,0,0,0.24)] text-zinc-300 leading-[1.7]">Loading users...</div>}
-      {!loading && error && <div className="grid justify-items-center gap-4 min-h-[320px] p-[40px_24px] text-center border border-red-500/35 rounded-xl bg-red-500/10 shadow-[0_18px_45px_rgba(0,0,0,0.24)] text-red-200 leading-[1.7]">{error}</div>}
+      {loading && (
+        <div className="mt-4 grid min-h-64 place-items-center bg-white shadow-sm text-gray-600">
+          Loading users...
+        </div>
+      )}
+
+      {!loading && error && (
+        <div className="mt-4 rounded border border-red-200 bg-red-50 p-4 text-red-700">
+          {error}
+        </div>
+      )}
 
       {!loading && !error && (
         <>
-          <div className="hidden sm:block overflow-hidden border border-white/5 rounded-xl bg-zinc-900 shadow-[0_18px_45px_rgba(0,0,0,0.24)]">
-            <table className="w-full border-collapse">
-              <thead>
+          <div className="mt-4 hidden overflow-hidden bg-white shadow-sm md:block">
+            <table className="w-full border-collapse text-sm">
+              <thead className="bg-[#f1f3f6] text-left text-gray-600">
                 <tr>
-                  <th className="text-zinc-400 text-[0.82rem] font-extrabold tracking-[0.06em] uppercase p-4 text-left align-middle border-b border-white/5">Name</th>
-                  <th className="text-zinc-400 text-[0.82rem] font-extrabold tracking-[0.06em] uppercase p-4 text-left align-middle border-b border-white/5">Email</th>
-                  <th className="text-zinc-400 text-[0.82rem] font-extrabold tracking-[0.06em] uppercase p-4 text-left align-middle border-b border-white/5">Role</th>
-                  <th className="text-zinc-400 text-[0.82rem] font-extrabold tracking-[0.06em] uppercase p-4 text-left align-middle border-b border-white/5">Verified</th>
-                  <th className="text-zinc-400 text-[0.82rem] font-extrabold tracking-[0.06em] uppercase p-4 text-left align-middle border-b border-white/5">User ID</th>
+                  <th className="p-4">Name</th>
+                  <th className="p-4">Email</th>
+                  <th className="p-4">Role</th>
+                  <th className="p-4">Verified</th>
+                  <th className="p-4">User ID</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((item) => (
-                  <tr key={item._id}>
-                    <td className="text-zinc-300 p-4 text-left align-middle border-b border-white/5">
-                      <strong className="text-white font-bold">{item.name}</strong>
-                    </td>
-                    <td className="text-zinc-300 p-4 text-left align-middle border-b border-white/5">{item.email}</td>
-                    <td className="text-zinc-300 p-4 text-left align-middle border-b border-white/5">{item.role}</td>
-                    <td className="text-zinc-300 p-4 text-left align-middle border-b border-white/5">{item.verified ? "Yes" : "No"}</td>
-                    <td className="text-zinc-300 p-4 text-left align-middle border-b border-white/5">{item._id}</td>
+                  <tr className="border-t" key={item._id}>
+                    <td className="p-4 font-semibold">{item.name}</td>
+                    <td className="p-4">{item.email}</td>
+                    <td className="p-4">{item.role}</td>
+                    <td className="p-4">{item.verified ? "Yes" : "No"}</td>
+                    <td className="p-4">{item._id}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          <div className="grid gap-[14px] sm:hidden">
+          <div className="mt-4 grid gap-3 md:hidden">
             {users.map((item) => (
-              <article className="grid gap-[14px] p-[18px] border border-white/5 rounded-[10px] bg-zinc-900" key={item._id}>
-                <div className="flex justify-between gap-4 text-zinc-300">
-                  <span className="text-zinc-400">Name</span>
-                  <strong className="text-white font-bold">{item.name}</strong>
-                </div>
-                <div className="flex justify-between gap-4 text-zinc-300">
-                  <span className="text-zinc-400">Email</span>
-                  <strong className="text-white font-bold">{item.email}</strong>
-                </div>
-                <div className="flex justify-between gap-4 text-zinc-300">
-                  <span className="text-zinc-400">Role</span>
-                  <strong className="text-white font-bold">{item.role}</strong>
-                </div>
-                <div className="flex justify-between gap-4 text-zinc-300">
-                  <span className="text-zinc-400">Verified</span>
-                  <strong className="text-white font-bold">{item.verified ? "Yes" : "No"}</strong>
+              <article className="bg-white p-4 shadow-sm" key={item._id}>
+                <h2 className="font-semibold">{item.name}</h2>
+                <p className="mt-1 break-words text-sm text-gray-600">{item.email}</p>
+                <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
+                  <div>
+                    <span className="text-gray-500">Role</span>
+                    <strong className="block">{item.role}</strong>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Verified</span>
+                    <strong className="block">{item.verified ? "Yes" : "No"}</strong>
+                  </div>
                 </div>
               </article>
             ))}

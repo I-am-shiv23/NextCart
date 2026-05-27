@@ -1,11 +1,18 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
 import { API_BASE_URL } from "../config";
 
+const formatCurrency = (value) =>
+  new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+  }).format(Number(value) || 0);
+
 const ProductDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -53,10 +60,7 @@ const ProductDetails = () => {
       price,
       stock,
       imageUrl,
-      formattedPrice: new Intl.NumberFormat("en-IN", {
-        style: "currency",
-        currency: "INR",
-      }).format(price),
+      oldPrice: Math.round(price + price * 0.18),
       inStock: stock > 0,
     };
   }, [product]);
@@ -67,8 +71,8 @@ const ProductDetails = () => {
     setQuantity(Math.min(Math.max(value, 1), maxQuantity));
   };
 
-  const handleAddToCart = () => {
-    if (!productData?.inStock) return;
+  const addProductToCart = () => {
+    if (!productData?.inStock) return false;
 
     dispatch(
       addToCart({
@@ -77,25 +81,41 @@ const ProductDetails = () => {
       })
     );
     setSuccess(`${productData.name} added to cart.`);
+    return true;
+  };
+
+  const handleAddToCart = () => {
+    addProductToCart();
+  };
+
+  const handleBuyNow = () => {
+    const added = addProductToCart();
+    if (added) {
+      navigate("/cart");
+    }
   };
 
   if (loading) {
     return (
-      <main className="w-full max-w-[1240px] mx-auto pt-[30px] px-4 pb-[54px] sm:pt-[42px] sm:px-5 sm:pb-[70px]">
-        <div className="grid place-items-center min-h-[320px] p-[34px] border border-white/5 rounded-[14px] bg-zinc-900 text-zinc-300 text-center">Loading product details...</div>
+      <main className="main-content">
+        <div className="grid min-h-80 place-items-center bg-white p-8 shadow-sm text-gray-600">
+          Loading product details...
+        </div>
       </main>
     );
   }
 
   if (error) {
     return (
-      <main className="w-full max-w-[1240px] mx-auto pt-[30px] px-4 pb-[54px] sm:pt-[42px] sm:px-5 sm:pb-[70px]">
-        <div className="grid place-items-center min-h-[320px] p-[34px] border border-white/5 rounded-[14px] bg-zinc-900 text-zinc-300 text-center gap-3.5">
-          <h1 className="text-white mb-0 bg-none">Product unavailable</h1>
-          <p className="text-zinc-300">{error}</p>
-          <Link to="/shop" className="btn">
-            Back to Shop
-          </Link>
+      <main className="main-content">
+        <div className="grid min-h-80 place-items-center bg-white p-8 text-center shadow-sm">
+          <div>
+            <h1 className="text-2xl font-semibold">Product unavailable</h1>
+            <p className="mt-2 text-gray-600">{error}</p>
+            <Link to="/shop" className="btn mt-5">
+              Back to Shop
+            </Link>
+          </div>
         </div>
       </main>
     );
@@ -106,47 +126,82 @@ const ProductDetails = () => {
   }
 
   return (
-    <main className="w-full max-w-[1240px] mx-auto pt-[30px] px-4 pb-[54px] sm:pt-[42px] sm:px-5 sm:pb-[70px]">
-      <Link to="/shop" className="inline-flex text-zinc-400 font-bold mb-6 hover:text-orange-500">
-        Back to shop
+    <main className="main-content">
+      <Link to="/shop" className="mb-4 inline-flex text-sm font-semibold text-[#2874f0]">
+        Back to products
       </Link>
 
-      <section className="grid grid-cols-1 lg:grid-cols-[minmax(320px,0.9fr)_minmax(0,1.1fr)] gap-9 items-start">
-        <div className="grid place-items-center min-h-[420px] lg:min-h-[560px] p-[22px] sm:p-7 border border-white/5 rounded-[10px] sm:rounded-[14px] bg-[radial-gradient(circle_at_15%_15%,rgba(249,115,22,0.16),transparent_30%),linear-gradient(135deg,#18181b_0%,#111827_100%)] shadow-[0_18px_45px_rgba(0,0,0,0.32)]">
-          <img src={productData.imageUrl} alt={productData.name} className="w-full max-h-[500px] rounded-lg object-contain" />
+      <section className="grid gap-4 lg:grid-cols-[430px_1fr]">
+        <div className="bg-white p-4 shadow-sm lg:sticky lg:top-24">
+          <div className="flex min-h-96 items-center justify-center border border-gray-100 p-4">
+            <img src={productData.imageUrl} alt={productData.name} className="max-h-[430px] w-full object-contain" />
+          </div>
+
+          <div className="mt-4 grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={handleAddToCart}
+              disabled={!productData.inStock}
+              className="rounded-sm bg-[#ff9f00] px-4 py-4 text-sm font-semibold uppercase text-white disabled:bg-gray-300"
+            >
+              Add to Cart
+            </button>
+            <button
+              type="button"
+              onClick={handleBuyNow}
+              disabled={!productData.inStock}
+              className="rounded-sm bg-[#fb641b] px-4 py-4 text-sm font-semibold uppercase text-white disabled:bg-gray-300"
+            >
+              Buy Now
+            </button>
+          </div>
         </div>
 
-        <div className="p-[22px] sm:p-[34px] border border-white/5 rounded-[10px] sm:rounded-[14px] bg-zinc-900 shadow-[0_18px_45px_rgba(0,0,0,0.24)]">
-          <span className="inline-flex text-orange-500 text-[0.78rem] font-bold tracking-[0.08em] mb-4 uppercase">{productData.category}</span>
-          <h1 className="text-white text-[clamp(2rem,4vw,3.6rem)] leading-[1.08] mb-[18px] bg-none">{productData.name}</h1>
+        <div className="bg-white p-5 shadow-sm sm:p-7">
+          <p className="text-sm text-gray-500">{productData.category}</p>
+          <h1 className="mt-2 text-2xl font-semibold leading-snug text-gray-900">
+            {productData.name}
+          </h1>
 
-          <div className="flex flex-wrap gap-3 mb-[22px]">
-            <span className="p-[9px_12px] border border-white/5 rounded-lg bg-[rgba(9,9,11,0.44)] text-zinc-300 text-[0.92rem]">{Number(productData.rating || 0).toFixed(1)} Rating</span>
-            <span className="p-[9px_12px] border border-white/5 rounded-lg bg-[rgba(9,9,11,0.44)] text-zinc-300 text-[0.92rem]">{productData.numReviews || 0} Reviews</span>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <span className="rounded bg-green-600 px-2 py-1 text-xs font-semibold text-white">
+              {Number(productData.rating || 4.2).toFixed(1)} *
+            </span>
+            <span className="text-sm font-semibold text-gray-500">
+              {productData.numReviews || 0} Ratings and Reviews
+            </span>
           </div>
 
-          <p className="text-orange-500 text-[2.35rem] font-extrabold mb-5">{productData.formattedPrice}</p>
-          <p className="text-zinc-300 leading-[1.8] text-[1.05rem] mb-7">{productData.description}</p>
+          <p className="mt-4 text-sm font-semibold text-green-600">Special price</p>
+          <div className="mt-1 flex flex-wrap items-end gap-3">
+            <span className="text-3xl font-semibold">{formatCurrency(productData.price)}</span>
+            <span className="text-lg text-gray-400 line-through">
+              {formatCurrency(productData.oldPrice)}
+            </span>
+            <span className="text-base font-semibold text-green-600">18% off</span>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-7">
-            <div className="min-h-[98px] p-4 border border-white/5 rounded-lg bg-[rgba(9,9,11,0.44)]">
-              <span className="block text-zinc-400 text-[0.88rem] mb-2">Availability</span>
-              <strong className={productData.inStock ? "text-teal-500 text-[1.05rem]" : "text-red-500 text-[1.05rem]"}>
+          <div className="mt-6 border-t pt-5">
+            <h2 className="text-lg font-semibold">Available offers</h2>
+            <ul className="mt-3 grid gap-2 text-sm text-gray-700">
+              <li><span className="font-semibold text-green-700">Bank Offer</span> 10% instant discount on selected cards.</li>
+              <li><span className="font-semibold text-green-700">Free Delivery</span> on prepaid orders above Rs. 499.</li>
+              <li><span className="font-semibold text-green-700">Partner Offer</span> Extra savings on your first NexCart order.</li>
+            </ul>
+          </div>
+
+          <div className="mt-6 grid gap-4 border-t pt-5 sm:grid-cols-3">
+            <div>
+              <p className="text-sm text-gray-500">Availability</p>
+              <p className={productData.inStock ? "mt-1 font-semibold text-green-700" : "mt-1 font-semibold text-red-600"}>
                 {productData.inStock ? "In Stock" : "Out of Stock"}
-              </strong>
+              </p>
             </div>
-            <div className="min-h-[98px] p-4 border border-white/5 rounded-lg bg-[rgba(9,9,11,0.44)]">
-              <span className="block text-zinc-400 text-[0.88rem] mb-2">Stock</span>
-              <strong className="text-zinc-50 text-[1.05rem]">{productData.stock}</strong>
+            <div>
+              <p className="text-sm text-gray-500">Stock</p>
+              <p className="mt-1 font-semibold">{productData.stock}</p>
             </div>
-            <div className="min-h-[98px] p-4 border border-white/5 rounded-lg bg-[rgba(9,9,11,0.44)]">
-              <span className="block text-zinc-400 text-[0.88rem] mb-2">Category</span>
-              <strong className="text-zinc-50 text-[1.05rem]">{productData.category}</strong>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-[140px_minmax(0,1fr)] gap-3.5 sm:items-end">
-            <label className="grid gap-2 text-zinc-50 font-bold">
+            <label className="text-sm font-semibold text-gray-700">
               Quantity
               <input
                 type="number"
@@ -155,21 +210,21 @@ const ProductDetails = () => {
                 value={quantity}
                 onChange={handleQuantityChange}
                 disabled={!productData.inStock}
-                className="min-h-[50px] p-3 border border-zinc-800 rounded-lg bg-zinc-950 text-zinc-50 text-[1rem] outline-none focus:border-orange-500 focus:shadow-[0_0_0_3px_rgba(249,115,22,0.12)]"
+                className="mt-2 h-10 w-full rounded border border-gray-300 px-3 outline-none focus:border-[#2874f0]"
               />
             </label>
-
-            <button
-              type="button"
-              className="btn min-h-[50px] disabled:cursor-not-allowed disabled:opacity-[0.65] disabled:transform-none"
-              onClick={handleAddToCart}
-              disabled={!productData.inStock}
-            >
-              {productData.inStock ? "Add to Cart" : "Out of Stock"}
-            </button>
           </div>
 
-          {success && <div className="mt-[18px] p-[14px_16px] border border-teal-500/35 rounded-lg bg-teal-500/12 text-teal-100 font-bold">{success}</div>}
+          <div className="mt-6 border-t pt-5">
+            <h2 className="text-lg font-semibold">Description</h2>
+            <p className="mt-2 leading-7 text-gray-700">{productData.description}</p>
+          </div>
+
+          {success && (
+            <div className="mt-5 rounded border border-green-200 bg-green-50 p-3 text-sm font-semibold text-green-700">
+              {success}
+            </div>
+          )}
         </div>
       </section>
     </main>

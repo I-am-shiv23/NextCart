@@ -4,22 +4,22 @@ const disclaimerSections = [
   {
     id: "information",
     title: "General Information",
-    text: "The content on NexCart is provided for general shopping and product discovery purposes. We work to keep product details accurate, but information may change without notice.",
+    text: "The content on NexCart is for shopping and product discovery. We try to keep details correct, but information may change without notice.",
   },
   {
     id: "products",
     title: "Product Details",
-    text: "Images, descriptions, availability, prices, and offers may vary from time to time. Final product details should be reviewed before completing your order.",
+    text: "Images, descriptions, availability, prices and offers can change. Please review final product details before placing an order.",
   },
   {
     id: "external",
     title: "External Links",
-    text: "NexCart may include links or references to third-party services. We are not responsible for external websites, their content, or their privacy and business practices.",
+    text: "NexCart may use third party services. We are not responsible for external websites or their business practices.",
   },
   {
     id: "liability",
     title: "Limitation Of Liability",
-    text: "NexCart is not liable for indirect losses, delays, interruptions, or issues caused by incorrect information provided by customers, payment providers, delivery partners, or external systems.",
+    text: "NexCart is not liable for indirect loss, delay or issues caused by incorrect customer details, payment providers or delivery partners.",
   },
 ];
 
@@ -32,65 +32,71 @@ const quickNotes = [
 
 const Disclaimer = () => {
   return (
-    <main className="w-full max-w-[1240px] mx-auto pt-[30px] px-4 pb-[54px] sm:pt-[42px] sm:px-5 sm:pb-[68px]">
-      <header className="pt-[38px] pb-[34px] border-b border-white/5">
-        <span className="inline-flex text-orange-500 text-[0.78rem] font-bold tracking-[0.08em] mb-4 uppercase">Legal Notice</span>
-        <h1 className="text-white text-[clamp(2.4rem,6vw,5rem)] leading-none mb-[18px]">Disclaimer</h1>
-        <p className="max-w-[760px] text-[1.1rem] text-zinc-300 leading-[1.7]">
-          Please read this page to understand how NexCart presents product
-          information, handles external references, and limits responsibility
-          for certain ecommerce-related situations.
+    <main className="main-content">
+      <header className="bg-white p-6 shadow-sm sm:p-8">
+        <p className="text-sm font-semibold uppercase text-[#2874f0]">Legal Notice</p>
+        <h1 className="mt-3 text-3xl font-semibold">Disclaimer</h1>
+        <p className="mt-3 max-w-3xl leading-7 text-gray-600">
+          Please read this page to understand how NexCart presents product information,
+          external services and ecommerce-related responsibility.
         </p>
       </header>
 
-      <section className="grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-[30px] items-start mt-8">
-        <aside className="lg:sticky lg:top-[112px] p-6 border border-white/5 rounded-lg bg-zinc-900" aria-label="Disclaimer overview">
-          <h2 className="text-white text-[1.1rem] mb-[18px] bg-none">On this page</h2>
-          <nav className="grid gap-2">
+      <section className="mt-5 grid gap-4 lg:grid-cols-[270px_1fr]">
+        <aside className="h-fit bg-white p-5 shadow-sm lg:sticky lg:top-24">
+          <h2 className="text-lg font-semibold">On this page</h2>
+          <nav className="mt-4 grid gap-2">
             {disclaimerSections.map((section) => (
-              <a href={`#${section.id}`} key={section.id} className="text-zinc-400 py-[11px] px-3 rounded-lg hover:text-white hover:bg-orange-500/12">
+              <a
+                href={`#${section.id}`}
+                key={section.id}
+                className="rounded px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#2874f0]"
+              >
                 {section.title}
               </a>
             ))}
           </nav>
 
-          <div className="mt-6 p-4 border-l-[3px] border-teal-500 bg-zinc-950/50">
-            <span className="block text-zinc-400 text-[0.9rem] mb-1.5">Last updated</span>
-            <strong className="text-teal-500">May 15, 2026</strong>
+          <div className="mt-5 border-l-4 border-[#2874f0] bg-blue-50 p-4">
+            <p className="text-sm text-gray-500">Last updated</p>
+            <strong>May 15, 2026</strong>
           </div>
         </aside>
 
-        <div className="flex flex-col gap-6">
-          <section className="p-7 border border-white/5 rounded-lg bg-[radial-gradient(circle_at_95%_20%,rgba(20,184,166,0.14),transparent_30%),linear-gradient(135deg,#18181b_0%,#111827_100%)]">
-            <h2 className="text-white text-[1.35rem] mb-3 bg-none">Important shopping note</h2>
-            <p className="text-zinc-300 leading-[1.7]">
-              NexCart aims to provide a smooth and reliable shopping experience,
-              but customers should confirm product, pricing, and delivery
-              details before placing an order.
+        <div className="grid gap-4">
+          <section className="bg-white p-5 shadow-sm">
+            <h2 className="text-xl font-semibold">Important shopping note</h2>
+            <p className="mt-2 leading-7 text-gray-600">
+              NexCart aims to provide a smooth shopping experience, but customers should
+              confirm product, pricing and delivery details before completing orders.
             </p>
           </section>
 
-          <section className="grid gap-4">
-            {disclaimerSections.map((section, index) => (
-              <article
-                className="grid grid-cols-1 sm:grid-cols-[64px_minmax(0,1fr)] gap-[18px] p-[22px] sm:p-[26px] scroll-mt-[120px] border border-white/5 rounded-lg bg-zinc-900"
-                id={section.id}
-                key={section.id}
-              >
-                <span className="grid place-items-center w-[46px] h-[46px] rounded-lg bg-orange-500/12 text-orange-500 font-extrabold">{String(index + 1).padStart(2, "0")}</span>
+          {disclaimerSections.map((section, index) => (
+            <article
+              className="scroll-mt-28 bg-white p-5 shadow-sm"
+              id={section.id}
+              key={section.id}
+            >
+              <div className="flex gap-4">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-blue-50 font-semibold text-[#2874f0]">
+                  {index + 1}
+                </span>
                 <div>
-                  <h2 className="text-white text-[1.35rem] mb-3 bg-none">{section.title}</h2>
-                  <p className="text-zinc-300 leading-[1.7]">{section.text}</p>
+                  <h2 className="text-xl font-semibold">{section.title}</h2>
+                  <p className="mt-2 leading-7 text-gray-600">{section.text}</p>
                 </div>
-              </article>
-            ))}
-          </section>
+              </div>
+            </article>
+          ))}
 
-          <section className="p-[26px] border border-white/5 rounded-lg bg-zinc-900">
-            <h2 className="text-white text-[1.35rem] mb-3 bg-none">Quick reminders</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <section className="bg-white p-5 shadow-sm">
+            <h2 className="text-xl font-semibold">Quick reminders</h2>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {quickNotes.map((note) => (
-                <span key={note} className="text-zinc-300 py-[14px] px-4 border-l-[3px] border-orange-500 rounded-lg bg-zinc-950/40">{note}</span>
+                <p key={note} className="border-l-4 border-[#2874f0] bg-blue-50 p-3 text-sm">
+                  {note}
+                </p>
               ))}
             </div>
           </section>
