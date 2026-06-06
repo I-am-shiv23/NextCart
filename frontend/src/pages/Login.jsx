@@ -60,7 +60,7 @@ const Login = () => {
             Get access to your orders, wishlist and recommendations.
           </p>
           <img
-            src="/img/NextCartpng.png"
+            src="/img/nextCartLogo.png"
             alt="NexCart"
             className="mt-12 hidden w-48 rounded bg-white p-4 md:block"
           />

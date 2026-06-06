@@ -41,7 +41,7 @@ const About = () => {
         </div>
 
         <div className="flex items-center justify-center bg-blue-50 p-6">
-          <img src="/img/NextCartpng.png" alt="NexCart logo" className="max-h-56 object-contain" />
+          <img src="/img/nextCartLogo.png" alt="NexCart logo" className="max-h-56 object-contain rounded-lg" />
         </div>
       </section>
 

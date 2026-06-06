@@ -52,11 +52,10 @@ const Navbar = () => {
 
         {/* Logo */}
         <Link to="/" className="flex flex-shrink-0 items-center gap-2">
-          <span className="flex h-10 w-10 items-center justify-center rounded-[7px] bg-blue-600 text-[30px] font-medium text-white">
-            nc
-          </span>
+         <img src="/img/nextCartLogo.png" className="h-12 w-12 rounded-lg" alt="NexCart Logo" />
           <span className="text-[30px] font-medium tracking-tight text-white">
-            NexCart
+            Nex<span className="text-[#4083f1]">Cart</span> 
+
           </span>
         </Link>
 
