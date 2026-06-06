@@ -134,7 +134,7 @@ const Navbar = () => {
                 to="/profile"
                 className="flex h-[40px] items-center gap-1.5 rounded-[7px] border border-white/[0.09] bg-white/[0.04] px-2 text-white hover:border-blue-600/30 hover:bg-blue-600/15"
               >
-                <span className="flex h-[30px] w-[30px] items-center justify-center rounded-[5px] bg-blue-700 text-[20px] font-medium text-white">
+                <span className="flex h-[30px] w-[30px] pb-2 items-center justify-center rounded-[5px] bg-blue-700 text-[20px] font-medium text-white">
                   {getInitials(user.name)}
                 </span>
                 <span className="max-w-[200px] truncate text-[18px] font-medium text-white/80">
@@ -155,7 +155,7 @@ const Navbar = () => {
           ) : (
             <Link
               to="/login"
-              className="flex h-[30px] items-center rounded-[7px] border border-white/[0.09] bg-white/[0.04] px-4 text-[13px] font-medium text-white/70 hover:bg-white/[0.07] hover:text-white"
+              className="flex h-[40px] items-center rounded-[7px] border border-white/[0.09] bg-white/[0.04] px-4 text-[25px] font-medium text-white/70 hover:bg-white/[0.07] hover:text-white"
             >
               login
             </Link>
