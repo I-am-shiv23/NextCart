@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
 const cors = require('cors');
+const path = require('path');
 const connectDB = require('./config/db.js');
 const userRoutes = require('./routes/authRoutes')
 const productRoutes = require('./routes/productRoutes')
@@ -21,22 +22,26 @@ app.use(cors({
         if (!origin || allowedLocalOrigins.some((pattern) => pattern.test(origin))) {
             return callback(null, true);
         }
-
         return callback(new Error('Not allowed by CORS'));
     },
-    credentials:true    
+    credentials: true    
 }));
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 
 //Routes
 app.use('/api/auth', userRoutes)
 app.use('/api/products', productRoutes)
 app.use('/api/orders', orderRoutes)
 app.use('/api/payment', paymentRoutes)
-app.use('/api/analytics',analyticsRoutes)
+app.use('/api/analytics', analyticsRoutes)
 
+// Frontend serve (Production)
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
 
-app.listen(PORT,()=>{
+app.listen(PORT, () => {
     console.log(`server running on port ${PORT}`)
 })
