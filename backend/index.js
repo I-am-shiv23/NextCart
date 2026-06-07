@@ -14,21 +14,9 @@ connectDB();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const allowedLocalOrigins = [
-    /^http:\/\/localhost:\d+$/,
-    /^http:\/\/127\.0\.0\.1:\d+$/,
-];
 
 app.use(cors({
-    origin(origin, callback) {
-        if (!origin) return callback(null, true);
-        
-        const isLocal = allowedLocalOrigins.some((pattern) => pattern.test(origin));
-        const isFrontend = origin === process.env.FRONTEND_URL;
-        
-        if (isLocal || isFrontend) return callback(null, true);
-        return callback(new Error('Not allowed by CORS'));
-    },
+    origin: true,
     credentials: true    
 }));
 app.use(express.json());
@@ -40,7 +28,6 @@ app.use('/api/products', productRoutes)
 app.use('/api/orders', orderRoutes)
 app.use('/api/payment', paymentRoutes)
 app.use('/api/analytics', analyticsRoutes)
-
 
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
