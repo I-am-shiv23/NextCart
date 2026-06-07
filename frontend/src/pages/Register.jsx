@@ -78,9 +78,9 @@ const Register = () => {
             Sign up with your details to start shopping on NexCart.
           </p>
           <img
-            src="/img/NextCartpng.png"
+            src="/img/nextCartLogo.png"
             alt="NexCart"
-            className="mt-12 hidden w-48 rounded bg-white p-4 md:block"
+            className="mt-12 hidden w-48 rounded-3xl bg-white p-4 md:block"
           />
         </div>
 
