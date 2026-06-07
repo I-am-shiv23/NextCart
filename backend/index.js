@@ -14,14 +14,19 @@ connectDB();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const allowedLocalOrigins = [/^http:\/\/localhost:\d+$/, /^http:\/\/127\.0\.0\.1:\d+$/, process.env.FRONTEND_URL];
+const allowedLocalOrigins = [
+    /^http:\/\/localhost:\d+$/,
+    /^http:\/\/127\.0\.0\.1:\d+$/,
+];
 
-//Middleware
 app.use(cors({
     origin(origin, callback) {
-        if (!origin || allowedLocalOrigins.some((pattern) => pattern.test(origin))) {
-            return callback(null, true);
-        }
+        if (!origin) return callback(null, true);
+        
+        const isLocal = allowedLocalOrigins.some((pattern) => pattern.test(origin));
+        const isFrontend = origin === process.env.FRONTEND_URL;
+        
+        if (isLocal || isFrontend) return callback(null, true);
         return callback(new Error('Not allowed by CORS'));
     },
     credentials: true    
